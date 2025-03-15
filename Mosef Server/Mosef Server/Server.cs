@@ -10,19 +10,24 @@ namespace Mosef_Server
 {
     internal class Server
     {
-        DataBaseLoader? _DataBaseLoader;
         TcpListener? listener;
         readonly object queueLock = new();
 
-        Queue<(string request, TcpClient client)> RequestQueue = new();
+        GeneratorId _GeneratorId = new();
+        RegistrationDataChecker _RegistrationDataChecker = new();
+        DataBase _DataBase = new();
 
-        private Server()
-        {
-            _DataBaseLoader = new DataBaseLoader();
-
+        Dictionary<string, Delegate>? Orders;
+        public Server() {
+            Orders = new()
+            {
+                { "LogIn", new Func<string, string>(this.LogIn) }
+            };
         }
+        Queue<(string request, TcpClient client)> RequestQueue = new();
         public void StartServer()
         {
+            
             listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
             Console.WriteLine("Server started on port 5000...");
@@ -38,7 +43,7 @@ namespace Mosef_Server
         void HandleClient(TcpClient client)
         {
             NetworkStream stream = client.GetStream();
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[2048];
 
             try
             {
@@ -87,7 +92,22 @@ namespace Mosef_Server
 
         void ProcessRequest(string request, TcpClient client)
         {
-            throw new NotImplementedException();
+            
+        }
+
+        string LogIn(string request)
+        {
+            string Email = request.Split('$')[0] , Password = request.Split('$')[1];
+            string response = "EXP";
+
+            if (!_RegistrationDataChecker.EmailChecker(Email))
+                response = "InvalidEmail";
+            else if (!_RegistrationDataChecker.PasswordChecker(Email, Password, _DataBase))
+                response = "InvalidPassword";
+            else
+                response = _DataBase.GetUserData(Email)?.UserData() ?? "UserNotFound";
+
+            return response;
         }
     }
 }
