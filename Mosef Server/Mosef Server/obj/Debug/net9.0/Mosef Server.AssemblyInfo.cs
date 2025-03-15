@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mosef Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91c9947c8d154a0bc5c851ddce5d3101cc150a21")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mosef Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mosef Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
