@@ -1,0 +1,6 @@
+@Mosef_HostAddress = http://localhost:5120
+
+GET {{Mosef_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
