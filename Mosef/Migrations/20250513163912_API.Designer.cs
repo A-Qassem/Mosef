@@ -12,8 +12,8 @@ using Mosef;
 namespace Mosef.Migrations
 {
     [DbContext(typeof(MosefDbContext))]
-    [Migration("20250413102250_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250513163912_API")]
+    partial class API
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,15 +37,21 @@ namespace Mosef.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NurseId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ServiceId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AppointmentId");
+
+                    b.HasIndex("NurseId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Appointments");
                 });
@@ -62,7 +68,7 @@ namespace Mosef.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -71,6 +77,8 @@ namespace Mosef.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FeedbackId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -184,6 +192,53 @@ namespace Mosef.Migrations
                     b.HasKey("ServiceId");
 
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("Mosef.Appointment", b =>
+                {
+                    b.HasOne("Mosef.Nurse", "Nurse")
+                        .WithMany("Appointments")
+                        .HasForeignKey("NurseId");
+
+                    b.HasOne("Mosef.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId");
+
+                    b.HasOne("Mosef.Service", "Service")
+                        .WithMany("Appointments")
+                        .HasForeignKey("ServiceId");
+
+                    b.Navigation("Nurse");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Mosef.Feedback", b =>
+                {
+                    b.HasOne("Mosef.Patient", "Patient")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("PatientId");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Mosef.Nurse", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("Mosef.Patient", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Feedbacks");
+                });
+
+            modelBuilder.Entity("Mosef.Service", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }

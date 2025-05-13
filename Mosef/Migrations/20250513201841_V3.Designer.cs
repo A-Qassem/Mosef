@@ -12,8 +12,8 @@ using Mosef;
 namespace Mosef.Migrations
 {
     [DbContext(typeof(MosefDbContext))]
-    [Migration("20250413115704_NewRelation")]
-    partial class NewRelation
+    [Migration("20250513201841_V3")]
+    partial class V3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,14 +36,22 @@ namespace Mosef.Migrations
                     b.Property<string>("AppointmentStatus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NurseId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PatientId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ServiceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppointmentId");
 
@@ -68,7 +76,7 @@ namespace Mosef.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -77,6 +85,8 @@ namespace Mosef.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FeedbackId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -126,8 +136,8 @@ namespace Mosef.Migrations
                     b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("BirthDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientEmail")
                         .HasColumnType("nvarchar(max)");
@@ -200,7 +210,9 @@ namespace Mosef.Migrations
 
                     b.HasOne("Mosef.Patient", "Patient")
                         .WithMany("Appointments")
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Mosef.Service", "Service")
                         .WithMany("Appointments")
@@ -213,6 +225,15 @@ namespace Mosef.Migrations
                     b.Navigation("Service");
                 });
 
+            modelBuilder.Entity("Mosef.Feedback", b =>
+                {
+                    b.HasOne("Mosef.Patient", "Patient")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("PatientId");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("Mosef.Nurse", b =>
                 {
                     b.Navigation("Appointments");
@@ -221,6 +242,8 @@ namespace Mosef.Migrations
             modelBuilder.Entity("Mosef.Patient", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Feedbacks");
                 });
 
             modelBuilder.Entity("Mosef.Service", b =>

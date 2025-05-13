@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mosef")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cbd045c8b98f9b6fa546b29b2c88d286031c70bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ad9ea2c567fe7768ca0e433faa6b50752513fcf")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mosef")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mosef")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -33,14 +33,22 @@ namespace Mosef.Migrations
                     b.Property<string>("AppointmentStatus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NurseId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PatientId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ServiceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppointmentId");
 
@@ -125,8 +133,8 @@ namespace Mosef.Migrations
                     b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("BirthDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientEmail")
                         .HasColumnType("nvarchar(max)");
@@ -199,7 +207,9 @@ namespace Mosef.Migrations
 
                     b.HasOne("Mosef.Patient", "Patient")
                         .WithMany("Appointments")
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Mosef.Service", "Service")
                         .WithMany("Appointments")

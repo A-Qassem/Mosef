@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace Mosef
 {
@@ -8,34 +9,36 @@ namespace Mosef
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Register DbContext before Build()
-            builder.Services.AddDbContext<MosefDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            // Add services to the container.
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer(); // ÅÖÇÝÉ ÏÚã Swagger
-            builder.Services.AddSwaggerGen(c =>
+            builder.Services.AddCors(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                options.AddPolicy("AllowAll", builder =>
                 {
-                    Title = "Mosef API",
-                    Version = "v1",
-                    Description = "API for Mosef application"
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                 });
             });
 
+
+
+            // Register DbContext before Build()
+            builder.Services.AddDbContext<MosefDbContext>(options =>
+options.UseSqlServer("Server=db19546.public.databaseasp.net; Database=db19546; User Id=db19546; Password=Lm7+t2=J_T6j; Encrypt=False; MultipleActiveResultSets=True;"));
+
+            // Add services to the container.
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
+            app.UseCors("AllowAll");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mosef API V1");
-                });
+                app.UseSwaggerUI();
             }
 
 

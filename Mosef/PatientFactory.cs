@@ -5,8 +5,8 @@
         public static Patient CreatePatient(
             string PatientSSN, string PatientFirstName, string PatientLastName,
             string PatientEmail, string PatientPassword, string PatientPhone,
-            string PatientLocation, string? PatientGender, DateTime? birthDate,
-            string? PatientStatus)
+            string PatientLocation, string? PatientGender, string? birthDate = null,
+            string? PatientStatus = null)
         {
             return new Patient
             {

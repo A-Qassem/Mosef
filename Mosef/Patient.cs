@@ -13,7 +13,7 @@ namespace Mosef
         public string? PatientPhone { get; set; }
         public string? PatientLocation { get; set; }
         public string? PatientGender { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public string? BirthDate { get; set; }
         public string? PatientStatus { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }

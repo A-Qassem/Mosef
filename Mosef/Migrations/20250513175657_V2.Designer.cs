@@ -12,8 +12,8 @@ using Mosef;
 namespace Mosef.Migrations
 {
     [DbContext(typeof(MosefDbContext))]
-    [Migration("20250413120257_NewRelation2")]
-    partial class NewRelation2
+    [Migration("20250513175657_V2")]
+    partial class V2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,8 +128,8 @@ namespace Mosef.Migrations
                     b.Property<string>("PatientId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("BirthDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientEmail")
                         .HasColumnType("nvarchar(max)");

@@ -7,9 +7,11 @@
         string nurseId,
         DateTime date,
         string status,
+        string time,
+        string notes,
         string? serviceId = null)
         {
-            return new Appointment(patientId, nurseId, date, status, serviceId);
+            return new Appointment(patientId, nurseId, date, status, serviceId,time,notes);
         }
     }
 }
