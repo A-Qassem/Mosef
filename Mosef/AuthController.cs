@@ -81,6 +81,28 @@ namespace Mosef.Controllers
             return result;
         }
 
+        [HttpGet("all-patients")]
+        public async Task<IActionResult> GetAllPatients()
+        {
+            var patients = await _context.Patients
+                .Select(p => new
+                {
+                    p.PatientId,
+                    p.PatientFirstName,
+                    p.PatientLastName,
+                    p.PatientEmail,
+                    p.PatientPhone,
+                    p.PatientLocation,
+                    p.PatientGender,
+                    p.BirthDate,
+                    p.PatientStatus
+                })
+                .ToListAsync();
+
+            return Ok(patients);
+        }
+
+
     }
     public class RegisterDto
     {

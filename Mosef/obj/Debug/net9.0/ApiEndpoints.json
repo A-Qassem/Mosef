@@ -1,6 +1,16 @@
 [
   {
     "ContainingType": "Mosef.Controllers.AuthController",
+    "Method": "GetAllPatients",
+    "RelativePath": "api/Auth/all-patients",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Mosef.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
